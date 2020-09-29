@@ -9,9 +9,9 @@ export default class Loading extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" />
-        <Text style={styles.text}>위치를 찾을 수 없습니다. 다시 시도해주세요.</Text>
+        <Text style={styles.text}>위치를 탐색중입니다.</Text>
         <Text></Text>
-        <Button title="버튼2" onPress={() => navigation.goBack()}></Button>
+        <Button style={backgroundColor = "#2c2c2c" }title="뒤로가기" onPress={() => navigation.goBack()}></Button>
       </View>
     );
   }
