@@ -27,22 +27,26 @@ class HomeScreen extends React.Component {
   getWeather = async (latitude, longitude) => {
     const {
       data: {
-        main: { temp },
+        main: { temp,humidity, pressure },
         weather,
-        name
+        name,
+        visibility,
+        wind:{speed}
       }
     } = await axios.get(
       `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${API_KEY}&units=metric`
     );
-  //  Console.log(data);
     this.setState({
       isLoading: false,
       condition: weather[0].main,
       temp,
+      humidity,
+      pressure,
+      visibility,
+      speed,
       name
     }, () => {
     });
-    
   };
 
   getLocation = async () => {
@@ -73,14 +77,12 @@ class HomeScreen extends React.Component {
     this.state.isLoading ? (this.props.navigation.navigate("Loading")) : (this.props.navigation.navigate("Weather", { "state": this.state }))
     this.state.isLoading = true;
   }
-  // componentDidMount() {
-  //   this.getLocation();
-  // }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.title}>
-          <Text style={fontSize= 40}>지역을 선택해주세요!</Text>
+          <Text style={{fontSize: 20}}>지역을 선택해주세요!</Text>
         </View>
         <View style={styles.footer}>
           <CustomButton
@@ -100,7 +102,7 @@ class HomeScreen extends React.Component {
             title={'현재 위치로 탐색'}
             onPress={this._onPressButton4} />
           <CustomButton
-            buttonColor={'#D1B2FF'}
+            buttonColor={'#ECADFF'}
             title={'+'}
             onPress={()=>{Alert.alert("지역 추가 기능은 추후 업데이트 예정입니다.")}} />
         </View>
@@ -130,6 +132,7 @@ const AppNavigator = createStackNavigator({
     }
   },
 });
+
 
 const styles = StyleSheet.create({
   container: {

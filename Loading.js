@@ -17,15 +17,6 @@ export default class Loading extends Component {
   }
 }
 
-// export default function Loading() {
-//   return (
-//     <View style={styles.container}>
-//       <StatusBar barStyle="dark-content" />
-//       <Text style={styles.text}>현재 위치로 날씨를 탐색중입니다.</Text>
-//     </View>
-//   );
-// }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

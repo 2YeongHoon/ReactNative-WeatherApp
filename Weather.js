@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar, Button } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import PropTypes from "prop-types";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
 const weatherOptions = {
   Thunderstorm: {
     iconName: "weather-lightning",
@@ -67,9 +68,17 @@ const weatherOptions = {
 };
 
 export default class Weather extends Component {
-  render(){
+  render() {
     const { navigation } = this.props;
-    const {temp, condition, name} = navigation.getParam("state");
+    const {
+      temp,
+      condition,
+      name,
+      humidity,
+      pressure,
+      visibility,
+      speed,
+    } = navigation.getParam("state");
     return (
       <LinearGradient
         colors={weatherOptions[condition].gradient}
@@ -83,8 +92,14 @@ export default class Weather extends Component {
             color="white"
           />
           <Text style={styles.name}>현재 {name}의 기온은?</Text>
-          <Text style={styles.temp}>{parseInt(temp)}°C</Text>
-          
+          <Text style={styles.temp}>{parseInt(temp)}°C{"\n"}</Text>
+          <Text style={{ alignSelf: 'flex-start', color: "white", fontSize: 13 }}>          (생활 지수)</Text>
+          <View style={styles.a}>
+            <View style={styles.redView}><Text style={styles.text}>풍속{"\n"}{speed}m/s</Text></View>
+            <View style={styles.redView}><Text style={styles.text}>시정{"\n"}{visibility}</Text></View>
+            <View style={styles.redView}><Text style={styles.text}>습도{"\n"}{humidity}%</Text></View>
+            <View style={styles.redView}><Text style={styles.text}>기압{"\n"}{pressure}</Text></View>
+          </View>
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{weatherOptions[condition].title}</Text>
@@ -133,18 +148,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  a: {
+    flex: 0.5,
+    flexDirection: 'row', 
+    flexWrap: 'wrap',   
+    justifyContent: 'center',  
+    alignItems: 'center', 
+  },
+  text: {
+    fontSize: 15,
+    color: "white",
+    textAlign: "center"
+  },
+  redView: {
+    width: 170,
+    height: 50,
+    borderColor: 'white',
+    borderWidth: 1,
+  },
   temp: {
     fontSize: 42,
     color: "white"
   },
-  name:{
-    fontSize: 20,
+  name: {
+    fontSize: 15,
     color: "white"
   },
   halfContainer: {
-    flex: 1,
+    flex: 1.5,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   title: {
     color: "white",
